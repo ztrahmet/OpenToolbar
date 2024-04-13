@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Check if there is already an installation
-if [ -f /bin/opentoolbar ]; then
+if [ -f /usr/local/bin/opentoolbar ]; then
     echo -n ":: OpenToolbar is already installed! Do you want to override [Y/n] "
     read -r response
     response=$(echo "$response" | tr '[:upper:]' '[:lower:]')
@@ -40,7 +40,7 @@ if ! command -v gcc &> /dev/null; then
 fi
 
 # Compile the C++ program and check the exit status
-if sudo gcc -o /bin/opentoolbar ./src/main.c; then
+if sudo gcc -o /usr/local/bin/opentoolbar ./src/main.c; then
     echo -e "\e[32mInstallation Completed Successfully.\e[0m\nUse 'opentoolbar --help' command to see options."
 else
     echo -e "\e[31mFailed to install.\e[0m"

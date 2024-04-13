@@ -75,7 +75,7 @@ char getOutput(const char *command) {
 // Implement status functions
 bool conservationMode_status()
 {
-    snprintf(command, sizeof(command), "read -r -n 1 value < %s/conservation_mode && echo $value", DRIVER_PATH);
+    snprintf(command, sizeof(command), "read -r value < %s/conservation_mode && echo $value", DRIVER_PATH);
     bool status = getOutput(command)=='1'? 1: 0;
     if (status)
     {
@@ -88,7 +88,7 @@ bool conservationMode_status()
 
 bool usbCharging_status()
 {
-    snprintf(command, sizeof(command), "read -r -n 1 value < %s/usb_charging && echo $value", DRIVER_PATH);
+    snprintf(command, sizeof(command), "read -r value < %s/usb_charging && echo $value", DRIVER_PATH);
     bool status = getOutput(command)=='1'? 1: 0;
     if (status)
     {
@@ -101,7 +101,7 @@ bool usbCharging_status()
 
 bool fnLock_status()
 {
-    snprintf(command, sizeof(command), "read -r -n 1 value < %s/fn_lock && echo $value", DRIVER_PATH);
+    snprintf(command, sizeof(command), "read -r value < %s/fn_lock && echo $value", DRIVER_PATH);
     bool status = getOutput(command)=='1'? 1: 0;
     if (status)
     {
