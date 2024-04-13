@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
     // Handle command-line arguments in loop
     for (unsigned short i = 1; i < argc; i++)
     {
-        if (!strcmp(argv[i], "help") || !strcmp(argv[i], "--help"))
+        if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help"))
         {
             printf("Usage:\n");
             printf("   %s [OPTIONS]\n", EXEC);
@@ -31,15 +31,15 @@ int main(int argc, char* argv[])
             printf("   conservation-mode <0|1>   Enable (1) or disable (0) conservation mode\n");
             printf("   usb-charging <0|1>        Enable (1) or disable (0) usb charging\n");
             printf("   fn-lock <0|1>             Enable (1) or disable (0) fn lock\n");
-            printf("   status                    Show status information\n");
-            printf("   version                   Show version information\n");
-            printf("   help                      Show this help message\n");
+            printf("   -s, --status              Show status information\n");
+            printf("   -v, --version             Show version information\n");
+            printf("   -h, --help                Show this help message\n");
         }
-        else if (!strcmp(argv[i], "version") || !strcmp(argv[i], "--version"))
+        else if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--version"))
         {
             printf("%s %s\nSource: %s\n", NAME, VERSION, SOURCE_CODE);
         }
-        else if (!strcmp(argv[i], "status") || !strcmp(argv[i], "--status"))
+        else if (!strcmp(argv[i], "-s") || !strcmp(argv[i], "--status"))
         {
             printf("------------------------------------------------------------------------\n");
             conservationMode_status();
