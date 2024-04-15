@@ -11,7 +11,7 @@
 #define COLOR_CLEAN "\e[0m"
 #define COLOR_RED "\e[31m"
 #define COLOR_GREEN "\e[32m"
-#define COLOR_YELLOW "\e[33m"
-#define COLOR_BLUE "\e[34m"
+#define COLOR_YELLOW "\e[93m"
+#define COLOR_CYAN "\e[36m"
 
 #endif /* CONSTANTS_H */

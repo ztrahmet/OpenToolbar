@@ -79,10 +79,10 @@ bool conservationMode_status()
     bool status = getOutput(command)=='1'? 1: 0;
     if (status)
     {
-        printf(COLOR_YELLOW "Status: " COLOR_CLEAN "Conservation mode " COLOR_GREEN "[enabled]" COLOR_CLEAN "\n");
+        printf(COLOR_CYAN "Status: " COLOR_CLEAN "Conservation mode " COLOR_GREEN "[enabled]" COLOR_CLEAN "\n");
         return 1;
     }
-    printf(COLOR_YELLOW "Status: " COLOR_CLEAN "Conservation mode " COLOR_RED "[disabled]" COLOR_CLEAN "\n");
+    printf(COLOR_CYAN "Status: " COLOR_CLEAN "Conservation mode " COLOR_RED "[disabled]" COLOR_CLEAN "\n");
     return 0;
 }
 
@@ -92,10 +92,10 @@ bool usbCharging_status()
     bool status = getOutput(command)=='1'? 1: 0;
     if (status)
     {
-        printf(COLOR_YELLOW "Status: " COLOR_CLEAN "Usb charging " COLOR_GREEN "[enabled]" COLOR_CLEAN "\n");
+        printf(COLOR_CYAN "Status: " COLOR_CLEAN "Usb charging " COLOR_GREEN "[enabled]" COLOR_CLEAN "\n");
         return 1;
     }
-    printf(COLOR_YELLOW "Status: " COLOR_CLEAN "Usb charging " COLOR_RED "[disabled]" COLOR_CLEAN "\n");
+    printf(COLOR_CYAN "Status: " COLOR_CLEAN "Usb charging " COLOR_RED "[disabled]" COLOR_CLEAN "\n");
     return 0;
 }
 
@@ -105,9 +105,9 @@ bool fnLock_status()
     bool status = getOutput(command)=='1'? 1: 0;
     if (status)
     {
-        printf(COLOR_YELLOW "Status: " COLOR_CLEAN "Fn lock " COLOR_GREEN "[enabled]" COLOR_CLEAN "\n");
+        printf(COLOR_CYAN "Status: " COLOR_CLEAN "Fn lock " COLOR_GREEN "[enabled]" COLOR_CLEAN "\n");
         return 1;
     }
-    printf(COLOR_YELLOW "Status: " COLOR_CLEAN "Fn lock " COLOR_RED "[disabled]" COLOR_CLEAN "\n");
+    printf(COLOR_CYAN "Status: " COLOR_CLEAN "Fn lock " COLOR_RED "[disabled]" COLOR_CLEAN "\n");
     return 0;
 }
