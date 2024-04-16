@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
     for (int i = 1; i < argc; i++)
     {
         // Handle help argument
-        if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help"))
+        if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0)
         {
             printf("Usage:\n");
             printf("   %s [OPTIONS]\n", EXEC);
@@ -36,17 +36,15 @@ int main(int argc, char* argv[])
         }
 
         // Handle version argument
-        else if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--version"))
+        else if (strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "--version") == 0)
             printf("%s %s\nSource: %s\n", NAME, VERSION, SOURCE_CODE);
 
         // Handle status argument
-        else if (!strcmp(argv[i], "-s") || !strcmp(argv[i], "--status"))
+        else if (strcmp(argv[i], "-s") == 0 || strcmp(argv[i], "--status") == 0)
         {
-            printf("------------------------------------------------------------------------\n");
             conservationMode_status();
             usbCharging_status();
             fnLock_status();
-            printf("------------------------------------------------------------------------\n");
         }
 
         /*
