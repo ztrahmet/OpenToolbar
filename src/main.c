@@ -12,7 +12,7 @@ void printError(char*, char*);
 
 int main(int argc, char* argv[])
 {
-    // Checking if driver directory exist
+    // Checking if driver directory exists
     if (!ifDirectoryExists(DRIVER_PATH))
         return 1;
 
@@ -90,7 +90,10 @@ int main(int argc, char* argv[])
 
 bool ifDirectoryExists(const char* path)
 {
-    return access(path, F_OK) == 0;
+    if (access(path, F_OK) == 0)
+        return true;
+    printError("Invalid path", DRIVER_PATH);
+    return false;
 }
 
 void printError(char* title, char* msg)
