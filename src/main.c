@@ -1,14 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h> // bool
-#include <unistd.h> // access()
 #include "../include/constants.h" // DRIVER_PATH, NAME, EXEC, VERSION, SOURCE_CODE , COLOR_*
 #include "../include/device.h" // conservationMode, usbCharging, fnLock
-
-// Function prototypes
-bool ifDirectoryExists(const char*);
-void printError(char*, char*);
+#include "../include/utils.h" // ifDirectoryExists, printError
 
 int main(int argc, char* argv[])
 {
@@ -86,17 +81,4 @@ int main(int argc, char* argv[])
             printError("Invalid Usage",argv[i]);
     }
     return 0;
-}
-
-bool ifDirectoryExists(const char* path)
-{
-    if (access(path, F_OK) == 0)
-        return true;
-    printError("Invalid path", DRIVER_PATH);
-    return false;
-}
-
-void printError(char* title, char* msg)
-{
-    printf(COLOR_RED "%s: " COLOR_CLEAN "%s\n", title, msg);
 }

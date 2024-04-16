@@ -1,72 +1,18 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h> // bool
-#include "constants.h" // DRIVER_PATH, NAME, EXEC, VERSION, SOURCE_CODE , COLOR_*
+#ifndef DEVICE_H
+#define DEVICE_H
 
-char command[128];
+#include <stdbool.h>
 
-// Implement control functions
+// Function prototypes
 
-void conservationMode_control(bool value)
-{
-    snprintf(command, sizeof(command), "sudo sh -c 'echo %d > %s/conservation_mode'", value, DRIVER_PATH);
-    // Run and check if command succeed
-    if (system(command) == 0) 
-        printf(COLOR_YELLOW "Action: " COLOR_CLEAN "Conservation mode %s" COLOR_CLEAN "\n", value ? COLOR_GREEN "[enabled]" : COLOR_RED "[disabled]");
-}
+// Control functions return 1 on failed action
+bool conservationMode_control(bool value);
+bool usbCharging_control(bool value);
+bool fnLock_control(bool value);
 
-void usbCharging_control(bool value)
-{
-    snprintf(command, sizeof(command), "sudo sh -c 'echo %d > %s/usb_charging'", value, DRIVER_PATH);
-    // Run and check if command succeed
-    if (system(command) == 0) 
-        printf(COLOR_YELLOW "Action: " COLOR_CLEAN "Usb charging %s" COLOR_CLEAN "\n", value ? COLOR_GREEN "[enabled]" : COLOR_RED "[disabled]");
-}
+// Status functions to return true/false information
+bool conservationMode_status();
+bool usbCharging_status();
+bool fnLock_status();
 
-void fnLock_control(bool value)
-{
-    snprintf(command, sizeof(command), "sudo sh -c 'echo %d > %s/fn_lock'", value, DRIVER_PATH);
-    // Run and check if command succeed
-    if (system(command) == 0) 
-        printf(COLOR_YELLOW "Action: " COLOR_CLEAN "Fn lock %s" COLOR_CLEAN "\n", value ? COLOR_GREEN "[enabled]" : COLOR_RED "[disabled]");
-}
-
-
-// Function to get char output from bash command
-
-char getChar(const char *command) {
-    char output = ' ';
-    FILE *pipe = popen(command, "r");
-    if (pipe) {
-        fscanf(pipe, "%c", &output);
-        pclose(pipe);
-    }
-    return output;
-}
-
-// Implement status functions
-
-bool conservationMode_status()
-{
-    snprintf(command, sizeof(command), "read -r value < %s/conservation_mode && echo $value", DRIVER_PATH);
-    bool status = getChar(command) == '1' ? 1 : 0;
-    printf(COLOR_CYAN "Status: " COLOR_CLEAN "Conservation mode %s" COLOR_CLEAN "\n", status ? COLOR_GREEN "[enabled]" : COLOR_RED "[disabled]");
-    return status;
-}
-
-bool usbCharging_status()
-{
-    snprintf(command, sizeof(command), "read -r value < %s/usb_charging && echo $value", DRIVER_PATH);
-    bool status = getChar(command) == '1' ? 1 : 0;
-    printf(COLOR_CYAN "Status: " COLOR_CLEAN "Usb charging %s" COLOR_CLEAN "\n", status ? COLOR_GREEN "[enabled]" : COLOR_RED "[disabled]");
-    return status;
-}
-
-bool fnLock_status()
-{
-    snprintf(command, sizeof(command), "read -r value < %s/fn_lock && echo $value", DRIVER_PATH);
-    bool status = getChar(command) == '1' ? 1 : 0;
-    printf(COLOR_CYAN "Status: " COLOR_CLEAN "Fn lock %s" COLOR_CLEAN "\n", status ? COLOR_GREEN "[enabled]" : COLOR_RED "[disabled]");
-    return status;
-}
+#endif /* DEVICE_H */
