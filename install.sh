@@ -14,7 +14,7 @@ fi
 
 # Check if needed packages are not available
 if ! command -v gcc &> /dev/null; then
-    echo -e "\e[33mNeeded packages are not installed.\e[0m"
+    echo -e "\e[93mNeeded packages are not installed.\e[0m"
 
     if [ -x "$(command -v apt)" ]; then
         installCommand="apt install gcc"
@@ -42,6 +42,12 @@ fi
 # Compile the C program and check the exit status
 if sudo gcc -o /usr/local/bin/opentoolbar ./src/main.c ./src/device.c ./src/utils.c; then
     echo -e "\e[32mInstallation Completed Successfully.\e[0m\nUse 'opentoolbar --help' command to see options."
+    # Create bash completion file
+    if sudo mkdir -p /usr/share/bash-completion/completions/ && sudo cp ./opentoolbar_completion /usr/share/bash-completion/completions/opentoolbar; then
+        sudo chmod +x /usr/share/bash-completion/completions/opentoolbar && source /usr/share/bash-completion/completions/opentoolbar
+        return 0
+    fi
+    echo -e "\e[93mBash completion file could not be created.\e[0m Don't worry, you can still use opentoolbar."
     return 0
 fi
 
