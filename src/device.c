@@ -38,6 +38,21 @@ bool usbCharging_control(bool value)
     return 1;
 }
 
+bool touchpad_control(bool value)
+{
+    char command[COMMAND_LENGTH];
+    snprintf(command, sizeof(command), "sudo sh -c 'echo %d > %s/touchpad'", value, DRIVER_PATH);
+    // Run and check if command succeed
+    if (system(command) == 0)
+    {
+        printf(COLOR_YELLOW "Action: " COLOR_CLEAN "Touchpad %s" COLOR_CLEAN "\n", value ? COLOR_GREEN "[enabled]" : COLOR_RED "[disabled]");
+        return 0;
+    }
+    // Return 1 on failed action
+    printError("Action failed", "touchpad");
+    return 1;
+}
+
 bool fnLock_control(bool value)
 {
     char command[COMMAND_LENGTH];
@@ -83,6 +98,15 @@ bool usbCharging_status()
     snprintf(command, sizeof(command), "read -r value < %s/usb_charging && echo $value", DRIVER_PATH);
     bool status = getChar(command) == '1' ? 1 : 0;
     printf(COLOR_CYAN "Status: " COLOR_CLEAN "Usb charging %s" COLOR_CLEAN "\n", status ? COLOR_GREEN "[enabled]" : COLOR_RED "[disabled]");
+    return status;
+}
+
+bool touchpad_status()
+{
+    char command[COMMAND_LENGTH];
+    snprintf(command, sizeof(command), "read -r value < %s/touchpad && echo $value", DRIVER_PATH);
+    bool status = getChar(command) == '1' ? 1 : 0;
+    printf(COLOR_CYAN "Status: " COLOR_CLEAN "Touchpad %s" COLOR_CLEAN "\n", status ? COLOR_GREEN "[enabled]" : COLOR_RED "[disabled]");
     return status;
 }
 

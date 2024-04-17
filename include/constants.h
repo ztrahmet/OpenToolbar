@@ -4,7 +4,7 @@
 #define DRIVER_PATH "/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00"
 #define NAME "OpenToolbar"
 #define EXEC "opentoolbar"
-#define VERSION "1.2.1"
+#define VERSION "1.2.2"
 #define SOURCE_CODE "github.com/ztrahmet/OpenToolbar"
 
 // COLOR CONSTANTS

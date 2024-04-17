@@ -44,6 +44,7 @@ int main(int argc, char* argv[])
         {
             conservationMode_status();
             usbCharging_status();
+            touchpad_status();
             fnLock_status();
         }
 
@@ -67,6 +68,8 @@ int main(int argc, char* argv[])
                 conservationMode_control(value);
             else if (strcmp(argv[i], "usb-charging") == 0)
                 usbCharging_control(value);
+            else if (strcmp(argv[i], "touchpad") == 0)
+                touchpad_control(value);
             else if (strcmp(argv[i], "fn-lock") == 0)
                 fnLock_control(value);
             else

@@ -7,7 +7,7 @@ _opentoolbar_completion() {
     prev="${COMP_WORDS[COMP_CWORD-1]}"
     
     case "${prev}" in
-        conservation-mode|usb-charging|fn-lock)
+        conservation-mode|usb-charging|touchpad|fn-lock)
             local opts="0 1 false true enable disable"
             COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
             return 0
@@ -17,7 +17,7 @@ _opentoolbar_completion() {
     esac
 
     # Default completions
-    local opts="conservation-mode usb-charging fn-lock -s --status -v --version -h --help"
+    local opts="conservation-mode usb-charging touchpad fn-lock -s --status -v --version -h --help"
     COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
     return 0
 }
