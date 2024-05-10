@@ -1,4 +1,4 @@
-/* main.c
+/* opentoolbar-settings-management.h
  *
  * Copyright 2024 Ahmet Öztürk
  *
@@ -18,16 +18,17 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-#include "cli/opentoolbar-command-line.h"
+#ifndef OPENTOOLBAR_SETTINGS_MANAGEMENT_H
+#define OPENTOOLBAR_SETTINGS_MANAGEMENT_H
 
-#include <stdio.h>
+#include <stdbool.h> // bool
 
-int main(int argc, char* argv[])
-{
-    if (argc > 1)
-    {
-        return opentoolbarCommandLine(argc, argv);
-    }
-    printf("'%s --help' to see options.\n", argv[0]);
-    return 0;
-}
+#define DRIVER_DIRECTORY "/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00"
+
+bool isDirectory(const char []);
+
+int setting_switch(const char*, const char);
+
+char setting_status(const char*);
+
+#endif /* OPENTOOLBAR_SETTINGS_MANAGEMENT_H */

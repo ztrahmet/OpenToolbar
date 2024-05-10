@@ -1,4 +1,4 @@
-/* main.c
+/* opentoolbar-command-line.h
  *
  * Copyright 2024 Ahmet Öztürk
  *
@@ -18,16 +18,9 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-#include "cli/opentoolbar-command-line.h"
+#ifndef OPENTOOLBAR_COMMAND_LINE_H
+#define OPENTOOLBAR_COMMAND_LINE_H
 
-#include <stdio.h>
+int opentoolbarCommandLine(int, char *[]);
 
-int main(int argc, char* argv[])
-{
-    if (argc > 1)
-    {
-        return opentoolbarCommandLine(argc, argv);
-    }
-    printf("'%s --help' to see options.\n", argv[0]);
-    return 0;
-}
+#endif /* OPENTOOLBAR_COMMAND_LINE_H */

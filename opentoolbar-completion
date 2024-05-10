@@ -1,0 +1,44 @@
+#/usr/bin/env bash
+
+# Bash completion script
+
+_opentoolbar_completion() {
+    local prev="${COMP_WORDS[COMP_CWORD-1]}"
+    local cur="${COMP_WORDS[COMP_CWORD]}"
+    local option=""
+
+    # Check if any of the completion options are present
+    for str in "${COMP_WORDS[@]}"; do
+        if [[ "$str" == "-s" || "$str" == "--status" || "$str" == "-v" || "$str" == "--version" || "$str" == "-h" || "$str" == "--help" ]]; then
+            option="${str}"
+            break
+        fi
+    done
+
+    if [[ "$option" != "" ]]; then
+        case "$option" in
+            -s|--status)
+                COMPREPLY=($(compgen -W "conservation-mode fn-lock touchpad usb-charging" -- "$cur"))
+                ;;
+            -v|--version|-h|--help)
+                # No suggestions for version or help options
+                COMPREPLY=()
+                ;;
+            *)
+                # Default suggestions
+                ;;
+        esac
+    else
+        case "$prev" in
+            conservation-mode|fn-lock|touchpad|usb-charging)
+                COMPREPLY=($(compgen -W "0 1 off on" -- "$cur"))
+                ;;
+            *)
+                # Default suggestions
+                COMPREPLY=($(compgen -W "conservation-mode fn-lock touchpad usb-charging -s -v -h --status --version --help" -- "$cur"))
+                ;;
+        esac
+    fi
+}
+
+complete -F _opentoolbar_completion opentoolbar
