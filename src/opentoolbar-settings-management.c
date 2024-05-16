@@ -24,7 +24,7 @@
 #include <stdlib.h> // system()
 #include <unistd.h> // access()
 
-#define COMMAND_LENGTH 256
+#define COMMAND_LENGTH 128
 
 bool isDirectory(const char PATH[])
 {
@@ -34,37 +34,16 @@ bool isDirectory(const char PATH[])
         return false;
 }
 
-char getStatus(const char command[])
-{
-    FILE* pipe = popen(command, "r");
-    if (pipe)
-    {
-        char output;
-        fscanf(pipe, "%c", &output);
-        pclose(pipe);
-        if (output == '\0')
-            return '2'; // return '2' for missing setting files
-        // else
-        return output == '1' ? '1' : '0';
-    }
-    // else
-    return '2';
-}
-
 int setting_switch(const char* setting, const char value)
 {
     char command[COMMAND_LENGTH];
-    snprintf(command, sizeof(command), "sudo sh -c 'echo %c > "DRIVER_DIRECTORY"/$(echo %s | sed 's/-/_/g') &> /dev/null'", value, setting);
-    if (system(command) == 0)
-        return 0; // succeed
-    // else
-    return 1; // failed
+    snprintf(command, sizeof(command), "sudo sh -c 'echo %c >"DRIVER_DIRECTORY"/$(echo %s|sed 's/-/_/g')'>/dev/null 2>&1", value, setting);
+    return system(command);
 }
 
 char setting_status(const char* setting)
 {
-    isDirectory(DRIVER_DIRECTORY"");
     char command[COMMAND_LENGTH];
-    snprintf(command, sizeof(command), "if [ -f \""DRIVER_DIRECTORY"/$(echo '%s' | sed 's/-/_/g')\" ]; then\n read -r value < \""DRIVER_DIRECTORY"/$(echo '%s' | sed 's/-/_/g')\" && echo \"$value\"; fi", setting, setting);
-    return getStatus(command); // returns '2' when setting file is missing
+    snprintf(command, sizeof(command), "grep -q '^1' "DRIVER_DIRECTORY"/$(echo %s|sed 's/-/_/g')>/dev/null 2>&1", setting);
+    return system(command) == 0 ? '1' : '0';
 }
