@@ -26,7 +26,7 @@
 #include <string.h> // strcmp()
 #include <stdbool.h> // bool
 
-#define VERSION "1.4.1"
+#define VERSION "1.4.2"
 #define SOURCE "https://github.com/ztrahmet/OpenToolbar"
 
 #define RESET "\e[0m"
@@ -54,9 +54,9 @@ bool isSetting(const char* argv)
 
 int opentoolbarCommandLine(int argc, char* argv[])
 {
-    if (!isDirectory(DRIVER_DIRECTORY)) // Check driver directory for settings management
+    if (directoryExists() != 0) // Check driver directory for settings management
     {
-        printf(YELLOW"W: "RESET"Driver directory is not valid, settings may not work.\n");
+        printf(YELLOW"W: "RESET"Driver directory is not valid, settings will not work.\n");
     }
 
     for (int i = 1; i < argc; ++i)
@@ -159,7 +159,6 @@ void printInfo(void)
 void printStatus(const char* setting)
 {
     char status = setting_status(setting);
-    if (status == '2') return; // do not write status for missing setting files
     printf(CYAN"Status: "RESET"%s is %s"RESET"\n", setting, status == '1' ? GREEN"[ON]" : RED"[OFF]");
 }
 

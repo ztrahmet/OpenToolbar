@@ -22,16 +22,11 @@
 
 #include <stdio.h>
 #include <stdlib.h> // system()
-#include <unistd.h> // access()
 
 #define COMMAND_LENGTH 128
 
-bool isDirectory(const char PATH[])
-{
-    if (access(PATH, F_OK) == 0)
-        return true;
-    else
-        return false;
+int directoryExists(void) {
+    return system("[ -d '"DRIVER_DIRECTORY"' ]");
 }
 
 int setting_switch(const char* setting, const char value)

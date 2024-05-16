@@ -21,11 +21,9 @@
 #ifndef OPENTOOLBAR_SETTINGS_MANAGEMENT_H
 #define OPENTOOLBAR_SETTINGS_MANAGEMENT_H
 
-#include <stdbool.h> // bool
-
 #define DRIVER_DIRECTORY "/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00"
 
-bool isDirectory(const char []);
+int directoryExists(void);
 
 int setting_switch(const char*, const char);
 
