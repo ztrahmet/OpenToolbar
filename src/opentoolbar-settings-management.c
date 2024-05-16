@@ -54,7 +54,7 @@ char getStatus(const char command[])
 int setting_switch(const char* setting, const char value)
 {
     char command[COMMAND_LENGTH];
-    snprintf(command, sizeof(command), "echo \"%c\" | sudo tee "DRIVER_DIRECTORY"/$(echo \"%s\" | sed 's/-/_/g') &> /dev/null", value, setting);
+    snprintf(command, sizeof(command), "sudo sh -c 'echo %c > "DRIVER_DIRECTORY"/$(echo %s | sed 's/-/_/g') &> /dev/null'", value, setting);
     if (system(command) == 0)
         return 0; // succeed
     // else
