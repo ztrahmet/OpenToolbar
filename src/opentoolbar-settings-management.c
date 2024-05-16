@@ -43,7 +43,7 @@ char getStatus(const char command[])
         fscanf(pipe, "%c", &output);
         pclose(pipe);
         if (output == '\0')
-            return '2'; // return '2' for missing files
+            return '2'; // return '2' for missing setting files
         // else
         return output == '1' ? '1' : '0';
     }
@@ -66,5 +66,5 @@ char setting_status(const char* setting)
     isDirectory(DRIVER_DIRECTORY"");
     char command[COMMAND_LENGTH];
     snprintf(command, sizeof(command), "if [ -f \""DRIVER_DIRECTORY"/$(echo '%s' | sed 's/-/_/g')\" ]; then\n read -r value < \""DRIVER_DIRECTORY"/$(echo '%s' | sed 's/-/_/g')\" && echo \"$value\"; fi", setting, setting);
-    return getStatus(command); // returns '2' when a file is missing
+    return getStatus(command); // returns '2' when setting file is missing
 }

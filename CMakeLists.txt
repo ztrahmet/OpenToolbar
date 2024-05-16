@@ -3,13 +3,16 @@ project(opentoolbar C)
 set(CMAKE_C_STANDARD 99)
 
 # Collect source files
-file(GLOB MAIN
+file(GLOB SRC
         "src/*"
         "src/cli/*"
 )
 
 # Create executable
-add_executable(opentoolbar ${MAIN})
+add_executable(opentoolbar ${SRC})
 
 # Install opentoolbar executable to bin directory
-install(TARGETS opentoolbar DESTINATION bin)
+install(TARGETS opentoolbar DESTINATION /usr/bin)
+
+# Install opentoolbar bash-completion to completions directory
+install(PROGRAMS bash-completion DESTINATION /usr/share/bash-completion/completions RENAME opentoolbar)

@@ -26,7 +26,8 @@
 #include <string.h> // strcmp()
 #include <stdbool.h> // bool
 
-#define VERSION "1.4.0"
+#define VERSION "1.4.1"
+#define SOURCE "https://github.com/ztrahmet/OpenToolbar"
 
 #define RESET "\e[0m"
 #define RED "\e[31m"
@@ -36,14 +37,13 @@
 
 void printHelp(const char*);
 void printInfo(void);
-void printStatus(const char []);
+void printStatus(const char*);
 void printVersion(void);
 
 bool isSetting(const char* argv)
 {
     if (strcmp(argv, "conservation-mode") == 0 ||
         strcmp(argv, "fn-lock") == 0 ||
-        strcmp(argv, "touchpad") == 0 ||
         strcmp(argv, "usb-charging") == 0)
     {
         return true;
@@ -54,13 +54,13 @@ bool isSetting(const char* argv)
 
 int opentoolbarCommandLine(int argc, char* argv[])
 {
+    if (!isDirectory(DRIVER_DIRECTORY)) // Check driver directory for settings management
+    {
+        printf(YELLOW"W: "RESET"Driver directory is not valid, settings may not work.\n");
+    }
 
     for (int i = 1; i < argc; ++i)
     {
-        if (!isDirectory(DRIVER_DIRECTORY)) // Check driver directory for settings management
-        {
-            printf(YELLOW"W: "RESET"Driver directory is not valid, settings may not work.\n");
-        }
 
         if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0)
         {
@@ -83,7 +83,6 @@ int opentoolbarCommandLine(int argc, char* argv[])
             {
                 printStatus("conservation-mode");
                 printStatus("fn-lock");
-                printStatus("touchpad");
                 printStatus("usb-charging");
             }
             else
@@ -126,12 +125,14 @@ int opentoolbarCommandLine(int argc, char* argv[])
             }
             else
                 printf(RED"E: "RESET"'%s' needs a value, <0|1> or <off|on>.\n", argv[i]);
-        } // setting switch
+        } // setting switch options
 
         else
             printf(RED"E: "RESET"'%s' is not an option.\n", argv[i]);
 
     }
+
+    return 0;
 
 }
 
@@ -142,7 +143,6 @@ void printHelp(const char* EXEC)
     printf("Options:\n");
     printf("   conservation-mode <0|1>       Enable or disable conservation mode\n");
     printf("   fn-lock <0|1>                 Enable or disable fn lock\n");
-    printf("   touchpad <0|1>                Enable or disable touchpad\n");
     printf("   usb-charging <0|1>            Enable or disable usb charging\n");
     printf("   -h, --help                    Show this help message\n");
     printf("   -i, --info                    Show general app information\n");
@@ -153,13 +153,13 @@ void printHelp(const char* EXEC)
 void printInfo(void)
 {
     printf("OpenToolbar v"VERSION"\n");
-    printf("SOURCE: https://github.com/ztrahmet/OpenToolbar\n");
+    printf("SOURCE: "SOURCE"\n");
 }
 
 void printStatus(const char* setting)
 {
     char status = setting_status(setting);
-    if (status == '2') return; // do not write status for missing files
+    if (status == '2') return; // do not write status for missing setting files
     printf(CYAN"Status: "RESET"%s is %s"RESET"\n", setting, status == '1' ? GREEN"[ON]" : RED"[OFF]");
 }
 
