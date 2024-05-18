@@ -26,7 +26,7 @@
 #include <string.h> // strcmp()
 #include <stdbool.h> // bool
 
-#define VERSION "1.4.2"
+#define VERSION "1.4.3"
 #define SOURCE "https://github.com/ztrahmet/OpenToolbar"
 #define LICENSE "GPL-3.0"
 
@@ -48,6 +48,7 @@ bool isSetting(const char* argv)
 {
     if (strcmp(argv, "conservation-mode") == 0 ||
         strcmp(argv, "fn-lock") == 0 ||
+        strcmp(argv, "touchpad") == 0 ||
         strcmp(argv, "usb-charging") == 0)
     {
         return true;
@@ -87,6 +88,7 @@ int opentoolbarCommandLine(int argc, char* argv[])
             {
                 printStatus("conservation-mode");
                 printStatus("fn-lock");
+                printStatus("touchpad");
                 printStatus("usb-charging");
             }
             else
@@ -153,6 +155,7 @@ void printHelp(const char* EXEC)
     printf(UBOLD"Settings:\n"RESET);
     printf("   "BOLD"conservation-mode"RESET"          Limit battery percentage to 60 for battery health\n");
     printf("   "BOLD"fn-lock"RESET"                    Lock Fn key to use F1-F12 as default\n");
+    printf("   "BOLD"touchpad"RESET"                   Enable/disbale touchpad\n");
     printf("   "BOLD"usb-charging"RESET"               Always on usb port for charging other devices\n");
 }
 
@@ -165,6 +168,8 @@ void printInfo(void)
 
 void printStatus(const char* setting)
 {
+    if (fileExists(setting) != 0)
+        return; // don't write status if setting file doesn't exist
     char status = setting_status(setting);
     printf(CYAN"Status: %s "RESET"%s\n", status == '1' ? GREEN"▣" : RED"□", setting);
 }

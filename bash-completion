@@ -18,7 +18,7 @@ _opentoolbar_completion() {
     if [[ "$option" != "" ]]; then
         case "$option" in
             -s|--status)
-                COMPREPLY=($(compgen -W "conservation-mode fn-lock usb-charging" -- "$cur"))
+                COMPREPLY=($(compgen -W "conservation-mode fn-lock touchpad usb-charging" -- "$cur"))
                 ;;
             -v|--version|-h|--help)
                 # No suggestions for version or help options
@@ -30,12 +30,12 @@ _opentoolbar_completion() {
         esac
     else
         case "$prev" in
-            conservation-mode|fn-lock|usb-charging)
+            conservation-mode|fn-lock|touchpad|usb-charging)
                 COMPREPLY=($(compgen -W "0 1 false true" -- "$cur"))
                 ;;
             *)
                 # Default suggestions
-                COMPREPLY=($(compgen -W "conservation-mode fn-lock usb-charging -h -i -s -v --help --info --status --version" -- "$cur"))
+                COMPREPLY=($(compgen -W "conservation-mode fn-lock touchpad usb-charging -h -i -s -v --help --info --status --version" -- "$cur"))
                 ;;
         esac
     fi

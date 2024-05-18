@@ -26,7 +26,13 @@
 #define COMMAND_LENGTH 128
 
 int directoryExists(void) {
-    return system("[ -d '"DRIVER_DIRECTORY"' ]");
+    return system("[ -d "DRIVER_DIRECTORY" ]");
+}
+
+int fileExists(const char* setting) {
+    char command[128];
+    snprintf(command, sizeof(command), "[ -f "DRIVER_DIRECTORY"/$(echo %s|sed 's/-/_/g') ]", setting);
+    return system(command);
 }
 
 int setting_switch(const char* setting, const char value)

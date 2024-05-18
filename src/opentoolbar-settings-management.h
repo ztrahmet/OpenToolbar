@@ -25,6 +25,8 @@
 
 int directoryExists(void);
 
+int fileExists(const char*);
+
 int setting_switch(const char*, const char);
 
 char setting_status(const char*);
