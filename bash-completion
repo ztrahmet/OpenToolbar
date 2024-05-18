@@ -31,7 +31,7 @@ _opentoolbar_completion() {
     else
         case "$prev" in
             conservation-mode|fn-lock|usb-charging)
-                COMPREPLY=($(compgen -W "0 1 off on" -- "$cur"))
+                COMPREPLY=($(compgen -W "0 1 false true" -- "$cur"))
                 ;;
             *)
                 # Default suggestions

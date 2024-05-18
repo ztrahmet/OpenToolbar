@@ -28,12 +28,16 @@
 
 #define VERSION "1.4.2"
 #define SOURCE "https://github.com/ztrahmet/OpenToolbar"
+#define LICENSE "GPL-3.0"
 
 #define RESET "\e[0m"
-#define RED "\e[31m"
-#define GREEN "\e[32m"
-#define YELLOW "\e[33m"
-#define CYAN "\e[36m"
+#define RED "\e[0;31m"
+#define GREEN "\e[0;32m"
+#define YELLOW "\e[0;33m"
+#define CYAN "\e[0;36m"
+#define BOLD "\e[0;1;37m"
+#define UBOLD "\e[0;1;4;37m"
+#define ITALIC "\e[0;3;37m"
 
 void printHelp(const char*);
 void printInfo(void);
@@ -103,28 +107,28 @@ int opentoolbarCommandLine(int argc, char* argv[])
             if (i < argc - 1)
             {
                 char value;
-                if (strcmp(argv[i + 1], "0") == 0 || strcmp(argv[i + 1], "off") == 0)
+                if (strcmp(argv[i + 1], "0") == 0 || strcmp(argv[i + 1], "false") == 0)
                     value = '0';
-                else if (strcmp(argv[i + 1], "1") == 0 || strcmp(argv[i + 1], "on") == 0)
+                else if (strcmp(argv[i + 1], "1") == 0 || strcmp(argv[i + 1], "true") == 0)
                     value = '1';
                 else
                 {
-                    printf(RED"E: "RESET"'%s' needs a value, <0|1> or <off|on>.\n", argv[i]);
+                    printf(RED"E: "RESET"'%s' needs a bool value.\n", argv[i]);
                     continue;
                 } // value handle
 
                 if (setting_switch(argv[i], value) == 0)
                 {
-                    printf(YELLOW"Switch: "RESET"%s to %s"RESET"\n", argv[i], value == '1' ? GREEN"[ON]" : RED"[OFF]");
+                    printf(YELLOW"Switch: %s "RESET"%s\n", value == '1' ? GREEN"▣" : RED"□", argv[i]);
                 }
                 else
-                    printf(RED"E: "RESET"Failed to switch %s %s.\n", argv[i], value == '1' ? "[ON]" : "[OFF]");
+                    printf(RED"E: "RESET"Failed to switch %s.\n", argv[i]);
 
                 // skip value next time
                 ++i;
             }
             else
-                printf(RED"E: "RESET"'%s' needs a value, <0|1> or <off|on>.\n", argv[i]);
+                printf(RED"E: "RESET"'%s' needs a bool value.\n", argv[i]);
         } // setting switch options
 
         else
@@ -138,28 +142,31 @@ int opentoolbarCommandLine(int argc, char* argv[])
 
 void printHelp(const char* EXEC)
 {
-    printf("Usage:\n");
-    printf("   %s [OPTIONS]\n", EXEC);
-    printf("Options:\n");
-    printf("   conservation-mode <0|1>       Enable or disable conservation mode\n");
-    printf("   fn-lock <0|1>                 Enable or disable fn lock\n");
-    printf("   usb-charging <0|1>            Enable or disable usb charging\n");
-    printf("   -h, --help                    Show this help message\n");
-    printf("   -i, --info                    Show general app information\n");
-    printf("   -s, --status                  Show status information\n");
-    printf("   -v, --version                 Show version information\n");
+    printf(UBOLD"Usage:\n"RESET);
+    printf("   "BOLD"%s "ITALIC"<options>"RESET"\n", EXEC);
+    printf(UBOLD"Options:\n"RESET);
+    printf("   "ITALIC"<setting> <bool>"RESET"           Enable or disable a setting\n");
+    printf("   "BOLD"-h, --help"RESET"                 Show this help message\n");
+    printf("   "BOLD"-i, --info"RESET"                 Show general app information\n");
+    printf("   "BOLD"-s, --status "ITALIC"<?settings>"RESET"   Show current status of the settings\n");
+    printf("   "BOLD"-v, --version"RESET"              Show version information\n");
+    printf(UBOLD"Settings:\n"RESET);
+    printf("   "BOLD"conservation-mode"RESET"          Limit battery percentage to 60 for battery health\n");
+    printf("   "BOLD"fn-lock"RESET"                    Lock Fn key to use F1-F12 as default\n");
+    printf("   "BOLD"usb-charging"RESET"               Always on usb port for charging other devices\n");
 }
 
 void printInfo(void)
 {
     printf("OpenToolbar v"VERSION"\n");
-    printf("SOURCE: "SOURCE"\n");
+    printf("Source:  "ITALIC SOURCE RESET"\n");
+    printf("License: "LICENSE"\n");
 }
 
 void printStatus(const char* setting)
 {
     char status = setting_status(setting);
-    printf(CYAN"Status: "RESET"%s is %s"RESET"\n", setting, status == '1' ? GREEN"[ON]" : RED"[OFF]");
+    printf(CYAN"Status: %s "RESET"%s\n", status == '1' ? GREEN"▣" : RED"□", setting);
 }
 
 void printVersion(void)
