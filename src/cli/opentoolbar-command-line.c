@@ -31,13 +31,13 @@
 #define LICENSE "GPL-3.0"
 
 #define RESET "\e[0m"
-#define RED "\e[0;31m"
-#define GREEN "\e[0;32m"
-#define YELLOW "\e[0;33m"
-#define CYAN "\e[0;36m"
-#define BOLD "\e[0;1;37m"
-#define UBOLD "\e[0;1;4;37m"
-#define ITALIC "\e[0;3;37m"
+#define BOLD "\e[1m"
+#define ITALIC "\e[3m"
+#define UNDERLINE "\e[4m"
+#define RED "\e[31m"
+#define GREEN "\e[32m"
+#define YELLOW "\e[33m"
+#define CYAN "\e[36m"
 
 void printHelp(const char*);
 void printInfo(void);
@@ -144,15 +144,15 @@ int opentoolbarCommandLine(int argc, char* argv[])
 
 void printHelp(const char* EXEC)
 {
-    printf(UBOLD"Usage:\n"RESET);
-    printf("   "BOLD"%s "ITALIC"<options>"RESET"\n", EXEC);
-    printf(UBOLD"Options:\n"RESET);
+    printf(UNDERLINE BOLD"Usage:\n"RESET);
+    printf("   "BOLD"%s "RESET ITALIC"<options>"RESET"\n", EXEC);
+    printf(UNDERLINE BOLD"Options:\n"RESET);
     printf("   "ITALIC"<setting> <bool>"RESET"           Enable or disable a setting\n");
     printf("   "BOLD"-h, --help"RESET"                 Show this help message\n");
     printf("   "BOLD"-i, --info"RESET"                 Show general app information\n");
-    printf("   "BOLD"-s, --status "ITALIC"<?settings>"RESET"   Show current status of the settings\n");
+    printf("   "BOLD"-s, --status "RESET ITALIC"<?settings>"RESET"   Show current status of the settings\n");
     printf("   "BOLD"-v, --version"RESET"              Show version information\n");
-    printf(UBOLD"Settings:\n"RESET);
+    printf(UNDERLINE BOLD"Settings:\n"RESET);
     printf("   "BOLD"conservation-mode"RESET"          Limit battery percentage to 60 for battery health\n");
     printf("   "BOLD"fn-lock"RESET"                    Lock Fn key to use F1-F12 as default\n");
     printf("   "BOLD"touchpad"RESET"                   Enable/disbale touchpad\n");

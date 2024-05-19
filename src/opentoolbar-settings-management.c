@@ -30,7 +30,7 @@ int directoryExists(void) {
 }
 
 int fileExists(const char* setting) {
-    char command[128];
+    char command[COMMAND_LENGTH];
     snprintf(command, sizeof(command), "[ -f "DRIVER_DIRECTORY"/$(echo %s|sed 's/-/_/g') ]", setting);
     return system(command);
 }
