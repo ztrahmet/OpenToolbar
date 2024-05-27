@@ -29,22 +29,22 @@ int directoryExists(void) {
     return system("[ -d "DRIVER_DIRECTORY" ]");
 }
 
-int fileExists(const char* setting) {
+int fileExists(const char* SETTING) {
     char command[COMMAND_LENGTH];
-    snprintf(command, sizeof(command), "[ -f "DRIVER_DIRECTORY"/$(echo %s|sed 's/-/_/g') ]", setting);
+    snprintf(command, sizeof(command), "[ -f "DRIVER_DIRECTORY"/$(echo %s|sed 's/-/_/g') ]", SETTING);
     return system(command);
 }
 
-int setting_switch(const char* setting, const char value)
+int setting_switch(const char* SETTING, const char VALUE)
 {
     char command[COMMAND_LENGTH];
-    snprintf(command, sizeof(command), "sudo sh -c 'echo %c >"DRIVER_DIRECTORY"/$(echo %s|sed 's/-/_/g')'>/dev/null 2>&1", value, setting);
+    snprintf(command, sizeof(command), "sudo sh -c 'echo %c >"DRIVER_DIRECTORY"/$(echo %s|sed 's/-/_/g')'>/dev/null 2>&1", VALUE, SETTING);
     return system(command);
 }
 
-char setting_status(const char* setting)
+char setting_status(const char* SETTING)
 {
     char command[COMMAND_LENGTH];
-    snprintf(command, sizeof(command), "grep -q '^1' "DRIVER_DIRECTORY"/$(echo %s|sed 's/-/_/g')>/dev/null 2>&1", setting);
+    snprintf(command, sizeof(command), "grep -q '^1' "DRIVER_DIRECTORY"/$(echo %s|sed 's/-/_/g')>/dev/null 2>&1", SETTING);
     return system(command) == 0 ? '1' : '0';
 }

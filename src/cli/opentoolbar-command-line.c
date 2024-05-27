@@ -26,7 +26,7 @@
 #include <string.h> // strcmp()
 #include <stdbool.h> // bool
 
-#define VERSION "1.4.3"
+#define VERSION "0.1.0"
 #define SOURCE "https://github.com/ztrahmet/OpenToolbar"
 #define LICENSE "GPL-3.0"
 
@@ -166,12 +166,12 @@ void printInfo(void)
     printf("License: "LICENSE"\n");
 }
 
-void printStatus(const char* setting)
+void printStatus(const char* SETTING)
 {
-    if (fileExists(setting) != 0)
-        return; // don't write status if setting file doesn't exist
-    char status = setting_status(setting);
-    printf(CYAN"Status: %s "RESET"%s\n", status == '1' ? GREEN"▣" : RED"□", setting);
+    if (fileExists(SETTING) != 0)
+        return; // don't write status if the setting file is not valid
+    char status = setting_status(SETTING);
+    printf(CYAN"Status: %s "RESET"%s\n", status == '1' ? GREEN"▣" : RED"□", SETTING);
 }
 
 void printVersion(void)
